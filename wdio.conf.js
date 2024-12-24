@@ -49,11 +49,16 @@ exports.config = {
     // Sauce Labs platform configurator - a great tool to configure your capabilities:
     // https://saucelabs.com/platform/platform-configurator
     //
-    capabilities: [{
-        browserName: 'chrome'
-    }, {
-        browserName: 'firefox'
-    },],
+    capabilities: [
+        {
+          browserName: 'chrome',
+          //'goog:chromeOptions': {
+            //args: ['--headless', '--disable-gpu', '--window-size=1920,1080'],
+          //},
+          //browserName: 'firefox',
+          //browserName: 'safari',
+        },
+      ],
 
     //
     // ===================
@@ -132,7 +137,6 @@ exports.config = {
     mochaOpts: {
         ui: 'bdd',
         timeout: 60000,
-        retries: 2
     },
 
     //
@@ -187,8 +191,9 @@ exports.config = {
      * @param {Array.<String>} specs        List of spec file paths that are to be run
      * @param {object}         browser      instance of created browser/device session
      */
-    // before: function (capabilities, specs) {
-    // },
+    before: function (capabilities, specs) {
+        browser.maximizeWindow();
+     },
     /**
      * Runs before a WebdriverIO command gets executed.
      * @param {string} commandName hook command name
