@@ -69,15 +69,14 @@ describe('Trello Tests', () => {
     assert.equal(workspaceDescription, 'New Description!!!');
   });
 
-  it('Searches for Existing Board', async ()=>{
-    const searchBar = await $('#search')
-    await searchBar.setValue("To Do List")
+  it('Searches for Existing Board', async () => {
+    const searchBar = await $('#search');
+    await searchBar.setValue('To Do List');
 
     const section = await $('section.hl2XIttzg_LUv_');
     const boardLink = await section.$('ul.L0brLYR3ZZ6wm4 li a');
     await boardLink.waitForExist();
     const boardName = await boardLink.getText();
     assert.equal(boardName, 'New Board', 'Board with name "New Board" not found');
-
-  })
+  });
 });
