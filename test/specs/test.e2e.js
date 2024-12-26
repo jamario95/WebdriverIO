@@ -1,4 +1,6 @@
 const assert = require('assert');
+const { expect } = require('chai');
+const chai = require('chai');
 
 describe('Trello Tests', () => {
   // Scenario: Sign Up for a New Trello Account
@@ -19,7 +21,7 @@ describe('Trello Tests', () => {
 
     await browser.pause(2000);
     const currentUrl = await browser.getUrl();
-    assert(currentUrl.includes('boards'));
+    assert(currentUrl.includes('boards'), 'URL does not contain word: "boards"');
   });
 
   // Scenario: Create a New Board
@@ -36,7 +38,7 @@ describe('Trello Tests', () => {
     //await dismissButton.click();
 
     const currentUrl = await browser.getUrl();
-    assert(currentUrl.includes('board'));
+    currentUrl.should.include('board', 'URL should contain word: "board"');
   });
 
   // Scenario: Create a List on a Board (it doesnt work)
@@ -47,8 +49,8 @@ describe('Trello Tests', () => {
     await listName.setValue('New List');
     const confirmNewList = await $('button.bxgKMAm3lq5BpA.SdamsUKjxSBwGb.SEj5vUdI3VvxDc');
     await confirmNewList.click();
-    const newListName = await $('h2.KLvU2mDGTQrsWG');
-    assert(newListName.includes('New List'));
+    const newListName = await $('h2.KLvU2mDGTQrsWG').getText();
+    expect(newListName).to.equal('New List', 'New list name should match');;
   });
   // Scenario: Create a Card in a List it is continuation of crating board so I still cant make it
 
@@ -66,7 +68,7 @@ describe('Trello Tests', () => {
     await saveWorkspaceChanges.click();
 
     const workspaceDescription = await $('.ak-renderer-document > p').getText();
-    assert.equal(workspaceDescription, 'New Description!!!');
+    workspaceDescription.should.equal('New Description!!!', 'Description should match');
   });
 
   it('Searches for Existing Board', async () => {
@@ -77,6 +79,6 @@ describe('Trello Tests', () => {
     const boardLink = await section.$('ul.L0brLYR3ZZ6wm4 li a');
     await boardLink.waitForExist();
     const boardName = await boardLink.getText();
-    assert.equal(boardName, 'New Board', 'Board with name "New Board" not found');
+    expect(boardName).to.equal('New Board', 'Board with name "New Board" not found');
   });
 });
