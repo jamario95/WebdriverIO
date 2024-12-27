@@ -1,23 +1,27 @@
 const assert = require('assert');
 const { expect } = require('chai');
 const chai = require('chai');
+const HomePage = require('../po/pages/home.page.js');
+const LogInPage = require('../po/pages/logIn.page.js');
+
+const homePage = new HomePage();
+const logInPage = new LogInPage();
 
 describe('Trello Tests', () => {
   // Scenario: Sign Up for a New Trello Account
   // Scenario: Sign In to Trello
   it('Sign In to Trello', async () => {
-    await browser.url('https://trello.com');
-    const loginButton = await $(
-      '.Buttonsstyles__ButtonGroup-sc-1jwidxo-3.jnMZCI > a.Buttonsstyles__Button-sc-1jwidxo-0.kTwZBr'
-    );
-    await loginButton.click();
-    const emailField = await $('#username');
-    await emailField.setValue('login'); // edit
-    const continueButton = await $('#login-submit');
-    await continueButton.click();
-    const passwordField = await $('#password');
-    await passwordField.setValue('password'); //edit
-    await continueButton.click();
+    await homePage.open();
+
+    await homePage.clickLogInButton();
+
+    await logInPage.enterUsername();
+
+    await logInPage.clickContinueButton();
+
+    await logInPage.enterPassword();
+
+    await logInPage.clickContinueButton();
 
     await browser.pause(2000);
     const currentUrl = await browser.getUrl();
@@ -34,8 +38,6 @@ describe('Trello Tests', () => {
     await boardName.setValue('New Board');
     const createButton = await $('form > button.ijFumaLuInvBrL');
     await createButton.click();
-    //const dismissButton = await $('div.css-tmycqx > button.css-1a3ddn7')
-    //await dismissButton.click();
 
     const currentUrl = await browser.getUrl();
     currentUrl.should.include('board', 'URL should contain word: "board"');
@@ -50,7 +52,7 @@ describe('Trello Tests', () => {
     const confirmNewList = await $('button.bxgKMAm3lq5BpA.SdamsUKjxSBwGb.SEj5vUdI3VvxDc');
     await confirmNewList.click();
     const newListName = await $('h2.KLvU2mDGTQrsWG').getText();
-    expect(newListName).to.equal('New List', 'New list name should match');;
+    expect(newListName).to.equal('New List', 'New list name should match');
   });
   // Scenario: Create a Card in a List it is continuation of crating board so I still cant make it
 
