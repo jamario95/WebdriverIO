@@ -17,6 +17,7 @@ class BoardComponents {
   get(getName) {
     const elements = {
       listname: 'h2.KLvU2mDGTQrsWG',
+      cardname: 'a[data-testid="card-name"]'
     };
     return $(elements[getName]);
   }

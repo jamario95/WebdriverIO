@@ -13,7 +13,7 @@ class EditDashboardPage {
     return this.editDashboardComponents.click('save').click();
   }
   async enterDashboardName() {
-    return this.editDashboardComponents.edit('name').setValue('Mariusz Jansuzek Board');
+    return this.editDashboardComponents.edit('name').setValue('Mariusz Januszek Board');
   }
   async enterDashboardDescription() {
     return this.editDashboardComponents.edit('description').setValue('New Description!!!');

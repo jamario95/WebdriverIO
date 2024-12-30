@@ -15,11 +15,14 @@ class BoardPage {
   async getListName() {
     return this.boardComponents.get('listname').getText();
   }
-  async clickAddNewCardButton() {
-     return this.boardComponents.button('addcard').click();
+  async getCardName() {
+    return this.boardComponents.get('cardname').getText();
   }
-  async enterCardName(){
-    return this.boardComponents.textArea('cardname').setValue('New List')
+  async clickAddNewCardButton() {
+    return this.boardComponents.button('addcard').click();
+  }
+  async enterCardName() {
+    return this.boardComponents.textArea('cardname').setValue('New Card');
   }
   async clickCreateNewCardButton() {
     return this.boardComponents.button('createcard').click();
