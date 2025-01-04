@@ -50,11 +50,14 @@ exports.config = {
   capabilities: [
     {
       browserName: 'chrome',
-      //'goog:chromeOptions': {
-      //args: ['--headless', '--disable-gpu', '--window-size=1920,1080'],
-      //},
-      //browserName: 'firefox',
-      //browserName: 'safari',
+      'goog:chromeOptions': {
+        args: ['headless', 'disable-gpu', 'window-size=1920,1080', 'no-sandbox', 'disable-extensions'],
+      },
+      browserName: 'firefox',
+      'moz:firefoxOptions': {
+        args: ['-headless'],
+      },
+      //browserName: 'safari', Safari is no longer supported by Windows and Headlesmode is not supported by WebdriverIO
     },
   ],
 
@@ -135,7 +138,7 @@ exports.config = {
   mochaOpts: {
     ui: 'bdd',
     timeout: 60000,
-    //retries: 2,
+    retries: 2,
   },
 
   //

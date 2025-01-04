@@ -1,7 +1,6 @@
-const assert = require('assert');
 const chai = require('chai');
-const { expect } = require('chai');
-const should = chai.should();
+const { expect, assert } = require('chai');
+chai.should();
 const HomePage = require('../po/pages/home.page.js');
 const LogInPage = require('../po/pages/logIn.page.js');
 const DashboardPage = require('../po/pages/dashboard.page.js');
@@ -32,7 +31,7 @@ describe('Trello Tests', () => {
     await logInPage.enterPassword();
     await logInPage.clickContinueButton();
 
-    await browser.pause(3000);
+    await browser.pause(1000);
     const dashboardUrl = await dashboardPage.getDashboardUrl();
     console.log(dashboardUrl);
     assert(dashboardUrl.includes('boards'), 'URL does not contain word: "boards"');
@@ -77,10 +76,8 @@ describe('Trello Tests', () => {
 
     const dashboardDescription = await editDashboardPage.getDashboardDescription();
     const dashboardName = await editDashboardPage.getDashboardName();
-    expect(dashboardDescription).to.equal('New Description!!!', 'Description should match');
-    expect(dashboardName).to.equal('Mariusz Januszek Board', 'Name should match');
-    //dashboardDescription.should.equal('New Description!!!', 'Description should match');
-    //dashboardName.should.equal('Mariusz Januszek Board', 'Name should match');
+    dashboardDescription.should.equal('New Description!!!', 'Description should match');
+    dashboardName.should.equal('Mariusz Januszek Board', 'Name should match');
   });
 
   it('Searches for Existing Board', async () => {
