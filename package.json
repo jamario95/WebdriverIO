@@ -16,5 +16,8 @@
     "@wdio/mocha-framework": "^9.4.4",
     "@wdio/spec-reporter": "^9.4.4",
     "@wdio/visual-service": "^6.2.5"
+  },
+  "dependencies": {
+    "chai": "^5.1.2"
   }
 }

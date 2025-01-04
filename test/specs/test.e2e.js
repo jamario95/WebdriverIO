@@ -1,5 +1,7 @@
-const assert = require('assert');
 const credentials = require('D:/WebdriverIO/credencials/credencials.js');
+const chai = require('chai');
+const { expect, should, assert } = require('chai');
+chai.should();
 
 describe('Trello Tests', () => {
   // Scenario: Sign Up for a New Trello Account
@@ -22,6 +24,9 @@ describe('Trello Tests', () => {
     const passwordField = await $('#password');
     await passwordField.setValue(credentials.password);
     await continueButton.click();
+    await browser.pause(1000);
+    const dashboardUrl = await browser.getUrl();
+    assert(dashboardUrl.includes('boards'), 'URL does not contain word: "boards"');
   });
 
   // Scenario: Create a New Board
@@ -34,6 +39,10 @@ describe('Trello Tests', () => {
     await boardName.setValue('New Board');
     const createButton = await $('form > button.ijFumaLuInvBrL');
     await createButton.click();
+
+    await browser.pause(1000);
+    const boardUrl = await browser.getUrl();
+    assert(boardUrl.includes('board'), 'URL should contain word: "board"');
   });
 
   // Scenario: Create a List on a Board
@@ -42,15 +51,21 @@ describe('Trello Tests', () => {
     await listName.setValue('New List');
     const confirmNewList = await $('button[data-testid="list-composer-add-list-button"]');
     await confirmNewList.click();
+
+    const listNameField = await $('h2.KLvU2mDGTQrsWG');
+    expect(await listNameField.getText()).to.equal('New List', 'New list name should match');
   });
   // Scenario: Create a Card in a List
   it('Adds a new card', async () => {
     const createCard = await $('button[data-testid="list-add-card-button"]');
     await createCard.click();
     const cardName = await $('textarea[data-testid="list-card-composer-textarea"]');
-    await cardName.setValue('New List');
+    await cardName.setValue('New Card');
     const confirmNewCard = await $('button[data-testid="list-card-composer-add-card-button"]');
     await confirmNewCard.click();
+
+    const CardNameField = await $('a[data-testid="card-name"]');
+    expect(await CardNameField.getText()).to.equal('New Card', 'New card name should match');
   });
 
   //Scenario Edit Description and Workspace Name
@@ -67,6 +82,11 @@ describe('Trello Tests', () => {
     await editWorkspaceDescription.setValue('New Description!!!');
     const saveWorkspaceChanges = await $('button._wJD3QSFJjW4Pb.bxgKMAm3lq5BpA.SdamsUKjxSBwGb.SEj5vUdI3VvxDc');
     await saveWorkspaceChanges.click();
+
+    const dashboardDescription = await $('.ak-renderer-document > p').getText();
+    const dashboardName = await $('h2.SiP6d2d_8FAAkC').getText();
+    dashboardDescription.should.equal('New Description!!!', 'Description should match');
+    dashboardName.should.equal('Mariusz Januszek Board', 'Name should match');
   });
 
   it('Searches for Existing Board', async () => {

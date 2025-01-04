@@ -52,7 +52,7 @@ exports.config = {
       browserName: 'chrome',
       'goog:chromeOptions': {
         args: ['headless', 'disable-gpu', 'window-size=1920,1080', 'no-sandbox', 'disable-extensions'],
-      },
+     },
       browserName: 'firefox',
       'moz:firefoxOptions': {
         args: ['-headless'],
@@ -138,7 +138,7 @@ exports.config = {
   mochaOpts: {
     ui: 'bdd',
     timeout: 60000,
-    //retries: 2,
+    retries: 2,
   },
 
   //
