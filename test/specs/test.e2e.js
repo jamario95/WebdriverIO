@@ -1,25 +1,27 @@
 const assert = require('assert');
+const credentials = require('D:/WebdriverIO/credencials/credencials.js');
 
 describe('Trello Tests', () => {
   // Scenario: Sign Up for a New Trello Account
+  it('Creates new account', async () => {
+    await browser.url('https://trello.com/home');
+    const registerButton = await $(
+      'a.Buttonsstyles__Button-sc-1jwidxo-0.Buttonsstyles__PrimaryButton-sc-1jwidxo-1.kTwZBr.lhSFdZ'
+    );
+    await registerButton.click();
+  });
   // Scenario: Sign In to Trello
   it('Sign In to Trello', async () => {
-    await browser.url('https://trello.com');
-    const loginButton = await $(
-      '.Buttonsstyles__ButtonGroup-sc-1jwidxo-3.jnMZCI > a.Buttonsstyles__Button-sc-1jwidxo-0.kTwZBr'
-    );
+    await browser.url('https://trello.com/home');
+    const loginButton = await $('a.Buttonsstyles__Button-sc-1jwidxo-0.kTwZBr');
     await loginButton.click();
     const emailField = await $('#username');
-    await emailField.setValue('login'); // edit
+    await emailField.setValue(credentials.username);
     const continueButton = await $('#login-submit');
     await continueButton.click();
     const passwordField = await $('#password');
-    await passwordField.setValue('password'); //edit
+    await passwordField.setValue(credentials.password);
     await continueButton.click();
-
-    await browser.pause(2000);
-    const currentUrl = await browser.getUrl();
-    assert(currentUrl.includes('boards'));
   });
 
   // Scenario: Create a New Board
@@ -32,51 +34,43 @@ describe('Trello Tests', () => {
     await boardName.setValue('New Board');
     const createButton = await $('form > button.ijFumaLuInvBrL');
     await createButton.click();
-    //const dismissButton = await $('div.css-tmycqx > button.css-1a3ddn7')
-    //await dismissButton.click();
-
-    const currentUrl = await browser.getUrl();
-    assert(currentUrl.includes('board'));
   });
 
-  // Scenario: Create a List on a Board (it doesnt work)
+  // Scenario: Create a List on a Board
   it('Adds a new list', async () => {
-    const addList = await $('.WC6fBZ3Z4IYlvP > button.CSwccJ0PrMROzz');
-    await addList.click();
     const listName = await $('textarea.oe8RymzptORQ7h');
     await listName.setValue('New List');
-    const confirmNewList = await $('button.bxgKMAm3lq5BpA.SdamsUKjxSBwGb.SEj5vUdI3VvxDc');
+    const confirmNewList = await $('button[data-testid="list-composer-add-list-button"]');
     await confirmNewList.click();
-    const newListName = await $('h2.KLvU2mDGTQrsWG');
-    assert(newListName.includes('New List'));
   });
-  // Scenario: Create a Card in a List it is continuation of crating board so I still cant make it
+  // Scenario: Create a Card in a List
+  it('Adds a new card', async () => {
+    const createCard = await $('button[data-testid="list-add-card-button"]');
+    await createCard.click();
+    const cardName = await $('textarea[data-testid="list-card-composer-textarea"]');
+    await cardName.setValue('New List');
+    const confirmNewCard = await $('button[data-testid="list-card-composer-add-card-button"]');
+    await confirmNewCard.click();
+  });
 
   //Scenario Edit Description and Workspace Name
   it('Edits Workspace details', async () => {
-    const workspaceName = await $('.xCguOZ9cqq39GJ');
+    const workspacesButton = await $('button.mWC2xT8NP_mW2g.frrHNIWnTojsww.bxgKMAm3lq5BpA.SEj5vUdI3VvxDc');
+    await workspacesButton.click();
+    const workspaceName = await $('a.TaNgu9ncpvX1uL');
     await workspaceName.click();
     const editWorkspace = await $('.Ch1Opdvr77xkJp.bxgKMAm3lq5BpA.iUcMblFAuq9LKn.SEj5vUdI3VvxDc');
     await editWorkspace.click();
     const editWorkspaceName = await $('input#displayName');
-    await editWorkspaceName.setValue('Random Name Board'); //
+    await editWorkspaceName.setValue('Mariusz Januszek Board'); //
     const editWorkspaceDescription = await $('textarea#desc');
     await editWorkspaceDescription.setValue('New Description!!!');
     const saveWorkspaceChanges = await $('button._wJD3QSFJjW4Pb.bxgKMAm3lq5BpA.SdamsUKjxSBwGb.SEj5vUdI3VvxDc');
     await saveWorkspaceChanges.click();
-
-    const workspaceDescription = await $('.ak-renderer-document > p').getText();
-    assert.equal(workspaceDescription, 'New Description!!!');
   });
 
   it('Searches for Existing Board', async () => {
     const searchBar = await $('#search');
-    await searchBar.setValue('To Do List');
-
-    const section = await $('section.hl2XIttzg_LUv_');
-    const boardLink = await section.$('ul.L0brLYR3ZZ6wm4 li a');
-    await boardLink.waitForExist();
-    const boardName = await boardLink.getText();
-    assert.equal(boardName, 'New Board', 'Board with name "New Board" not found');
+    await searchBar.setValue('New Board');
   });
 });

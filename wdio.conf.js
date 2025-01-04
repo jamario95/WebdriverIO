@@ -50,11 +50,14 @@ exports.config = {
   capabilities: [
     {
       browserName: 'chrome',
-      //'goog:chromeOptions': {
-      //args: ['--headless', '--disable-gpu', '--window-size=1920,1080'],
-      //},
-      //browserName: 'firefox',
-      //browserName: 'safari',
+      'goog:chromeOptions': {
+        args: ['headless', 'disable-gpu', 'window-size=1920,1080', 'no-sandbox', 'disable-extensions'],
+      },
+      browserName: 'firefox',
+      'moz:firefoxOptions': {
+        args: ['-headless'],
+      },
+      //browserName: 'safari', Safari is no longer supported by Windows and Headlesmode is not supported by WebdriverIO
     },
   ],
 
@@ -135,7 +138,7 @@ exports.config = {
   mochaOpts: {
     ui: 'bdd',
     timeout: 60000,
-    retries: 2,
+    //retries: 2,
   },
 
   //
@@ -198,8 +201,7 @@ exports.config = {
    * @param {string} commandName hook command name
    * @param {Array} args arguments that command would receive
    */
-  // beforeCommand: function (commandName, args) {
-  // },
+  beforeCommand: function (commandName, args) {},
   /**
    * Hook that gets executed before the suite starts
    * @param {object} suite suite details
@@ -233,8 +235,7 @@ exports.config = {
    * @param {boolean} result.passed    true if test has passed, otherwise false
    * @param {object}  result.retries   information about spec related retries, e.g. `{ attempts: 0, limit: 0 }`
    */
-  // afterTest: function(test, context, { error, result, duration, passed, retries }) {
-  // },
+  afterTest: function (test, context, { error, result, duration, passed, retries }) {},
 
   /**
    * Hook that gets executed after the suite has ended
