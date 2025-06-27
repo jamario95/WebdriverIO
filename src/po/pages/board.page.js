@@ -13,7 +13,9 @@ class BoardPage {
     return this.boardComponents.button('createlist').click();
   }
   async getListName() {
-    return this.boardComponents.get('listname').getText();
+    const listNameElem = await this.boardComponents.get('listname');
+    await listNameElem.waitForDisplayed({ timeout: 5000 });
+    return listNameElem.getValue();
   }
   async getCardName() {
     return this.boardComponents.get('cardname').getText();

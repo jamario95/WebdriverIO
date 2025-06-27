@@ -1,5 +1,5 @@
 const LogInComponents = require('./../components/logIn/logIn.component.js');
-const credentials = require('D:/WebdriverIO/credencials/credencials.js');
+const credentials = require('../../../credencials/credencials.js');
 class LogInPage {
   constructor() {
     this.logInComponents = new LogInComponents();
@@ -12,10 +12,14 @@ class LogInPage {
     return this.logInComponents.button('continue').click();
   }
   async enterUsername() {
-    return this.logInComponents.textArea('username').setValue(credentials.username);
+    const usernameInput = await this.logInComponents.textArea('username');
+    await usernameInput.waitForDisplayed({ timeout: 5000 });
+    return usernameInput.setValue(credentials.username);
   }
   async enterPassword() {
-    return this.logInComponents.textArea('password').setValue(credentials.password);
+    const passwordInput = await this.logInComponents.textArea('password');
+    await passwordInput.waitForDisplayed({ timeout: 5000 });
+    return passwordInput.setValue(credentials.password);
   }
 }
 

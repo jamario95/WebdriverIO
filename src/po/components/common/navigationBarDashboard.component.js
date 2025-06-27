@@ -12,7 +12,7 @@ class NavigationBarDashboard {
   create(createName) {
     const options = {
       title: 'label.fMvxkh4DHKJGnq > input.nch-textfield__input',
-      createboard: 'form > button.ijFumaLuInvBrL',
+      createboard: 'button[data-testid="create-board-submit-button"]',
     };
     return $(options[createName]);
   }

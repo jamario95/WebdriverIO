@@ -21,7 +21,9 @@ class DashboardPage {
     return this.navigationBarDashboard.create('title').setValue('New Board');
   }
   async createNewBoard() {
-    return this.navigationBarDashboard.create('createboard').click();
+    const createButton = await this.navigationBarDashboard.create('createboard');
+    await createButton.waitForClickable({ timeout: 5000 });
+    return createButton.click();
   }
 }
 

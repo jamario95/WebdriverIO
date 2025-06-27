@@ -1,7 +1,7 @@
 class LogInComponents {
   textArea(textAreaName) {
     const names = {
-      username: '#username',
+      username: 'input[data-testid="username"]',
       password: '#password',
     };
     return $(names[textAreaName]);
